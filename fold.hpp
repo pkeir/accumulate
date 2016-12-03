@@ -1,8 +1,8 @@
 #ifndef _FOLD_HPP_
 #define _FOLD_HPP_
 
+#include <numeric>
 #include <functional>
-#include <algorithm>
 
 template <typename F>
 inline auto flip(const F &f) {
