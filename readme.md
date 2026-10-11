@@ -11,8 +11,11 @@ To compile:
 g++ -std=c++14 accu.cpp
 ```
 
-Plus, a C++23/C++26 version using `std::fold_right` and the Ranges library
+Plus, a C++26 version using Ranges' `std::fold_right` and a touch of constexpr
+std::deque.
+
+To compile:
 
 ```
-g++ -std=c++23 accu2.cpp
+g++ -std=c++26 accu2.cpp
 ```
