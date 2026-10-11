@@ -53,12 +53,30 @@ int main()
   auto head = [](auto xs) { return *begin(xs); };
   static_assert(1 == head(vector{1,2,3}));
 
-  auto map = [=](auto f, auto xs){
+  auto map = [=](auto f, auto xs) {
     using t  = decltype(f(head(xs)));
     using c2 = inject_t<decltype(xs), t>;
     return fold_right(xs, c2{}, [=](auto y, auto ys){ return cons(f(y), ys); });
   };
   static_assert(vector{2,1} == map(length, vector{vector{1,2}, vector{3}}));
+
+  auto filter = [=](auto p, auto xs) {
+    return fold_right(
+      xs,
+      decltype(xs){},
+      [=](auto y, auto ys){ return p(y) ? cons(y,ys) : ys; }
+    );
+  };
+  static_assert(vector{1,3} == filter([](auto x){ return x%2; },vector{1,2,3}));
+
+  auto sum_length = [=](auto xs) {
+    return fold_right(
+      xs,
+      std::pair(0,0),
+      [=](auto n, auto p){ return std::pair(n + p.first, 1 + p.second); }
+    );
+  };
+  static_assert(std::pair(6,3) == sum_length(vector{1,2,3}));
 
   return 0;
 }
